@@ -1,6 +1,5 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/esm/supabase.js';
-const supabase = createClient('https://rubhsqcmjmvdwohooriw.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1YmhzcWNtam12ZHdvaG9vcml3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NTE1MzgsImV4cCI6MjA2MjIyNzUzOH0.xl9WVhRLg5fn2kjGQLP-gE7RAQEZJTsK9MzhFiJEp84'
-);
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const supabase = createClient('https://rubhsqcmjmvdwohooriw.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1YmhzcWNtam12ZHdvaG9vcml3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NTE1MzgsImV4cCI6MjA2MjIyNzUzOH0.xl9WVhRLg5fn2kjGQLP-gE7RAQEZJTsK9MzhFiJEp84');
 
 let produtos = [];
 
@@ -17,14 +16,16 @@ async function buscarProdutos() {
 }
 
 function formataPreco(preco) {
-  return preco.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  });
+  return preco.toLocaleString('pt-BR', 
+  { 
+    style: 'currency', 
+    currency: 'BRL' 
+  })
 }
 
 function renderizarProdutos() {
   const produtosContainer = document.getElementById('produtos');
+
   produtosContainer.innerHTML = '';
 
   const produtosHTML = produtos.map(produto => {
@@ -36,19 +37,19 @@ function renderizarProdutos() {
 
     const produtoNome = document.createElement('h3');
     produtoNome.className = 'produto-nome';
-    produtoNome.textContent = produto.nome;
+    produtoNome.textContent = produto.nome
 
     const produtoDescricao = document.createElement('p');
     produtoDescricao.className = 'produto-descricao';
-    produtoDescricao.textContent = produto.descricao;
+    produtoDescricao.textContent = produto.descricao
 
     const produtoPreco = document.createElement('div');
     produtoPreco.className = 'produto-preco';
-
-    if (produto.temdesconto) {
+    
+    if (produto.temDesconto) {
       const precoOriginal = document.createElement('span');
       precoOriginal.className = 'preco-original';
-      precoOriginal.textContent = formataPreco(produto.precooriginal);
+      precoOriginal.textContent = formataPreco(produto.precoOriginal);
 
       const precoDesconto = document.createElement('span');
       precoDesconto.className = 'preco-desconto';
@@ -59,10 +60,10 @@ function renderizarProdutos() {
     } else {
       produtoPreco.textContent = formataPreco(produto.preco);
     }
-
     produtoInfo.appendChild(produtoNome);
     produtoInfo.appendChild(produtoDescricao);
     produtoInfo.appendChild(produtoPreco);
+
     produtoCard.appendChild(produtoInfo);
 
     return produtoCard;
@@ -71,26 +72,21 @@ function renderizarProdutos() {
   produtosHTML.forEach(card => {
     produtosContainer.appendChild(card);
   });
+
 }
 
 function aplicarDesconto() {
-  let descontoAplicado = false;
-
   produtos.forEach(produto => {
-    if (!produto.temdesconto) {
-      produto.precooriginal = produto.preco;
-      produto.preco = parseFloat((produto.preco * 0.9).toFixed(2));
-      produto.temdesconto = true;
-      descontoAplicado = true;
+    if (!produto.temDesconto) {
+      produto.precoOriginal = produto.preco;
+      produto.preco = produto.preco * 0.9;
+      produto.temDesconto = true;
     }
   });
 
-  if (descontoAplicado) {
-    renderizarProdutos();
-  } else {
-    alert('Os descontos já foram aplicados.');
-  }
+  renderizarProdutos()
 }
 
 document.getElementById('aplicarDesconto').addEventListener('click', aplicarDesconto);
 
+document.addEventListener('DOMContentLoaded', buscarProdutos);
