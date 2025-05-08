@@ -1,5 +1,4 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.min.js';
-
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/esm/supabase.js';
 const supabase = createClient('https://rubhsqcmjmvdwohooriw.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1YmhzcWNtam12ZHdvaG9vcml3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NTE1MzgsImV4cCI6MjA2MjIyNzUzOH0.xl9WVhRLg5fn2kjGQLP-gE7RAQEZJTsK9MzhFiJEp84'
 );
 
