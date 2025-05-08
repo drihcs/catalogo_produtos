@@ -3,24 +3,21 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const supabase = createClient('https://rubhsqcmjmvdwohooriw.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1YmhzcWNtam12ZHdvaG9vcml3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2NTE1MzgsImV4cCI6MjA2MjIyNzUzOH0.xl9WVhRLg5fn2kjGQLP-gE7RAQEZJTsK9MzhFiJEp84'
 );
 
-let produtos = []
+let produtos = [];
 
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const { data, error } = await supabase
-      .from('produtos')
-      .select('*');
+async function buscarProdutos() {
+ const { data, error } = await supabase
+ .from('produtos')
+ .select('*');
 
-    if (error) throw error;
-
-    console.log('Produtos carregados:', data);
-    document.addEventListener('DOMContentLoaded', renderizarProdutos);    
-  } 
-  
-  catch (error) {
-    console.error('Erro ao carregar produtos:', error.message);
+  if (error) {
+    console.error('Erro ao buscar produtos: ', error.message);
+    return;
   }
-});
+
+  produtos = data;
+  renderizarProdutos();
+}
 
 function formataPreco(preco) {
   return preco.toLocaleString('pt-BR', {
