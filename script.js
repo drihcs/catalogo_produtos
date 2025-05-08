@@ -5,9 +5,7 @@ const supabase = createClient('https://rubhsqcmjmvdwohooriw.supabase.co','eyJhbG
 let produtos = [];
 
 async function buscarProdutos() {
- const { data, error } = await supabase
- .from('produtos')
- .select('*');
+ const { data, error } = await supabase.from('produtos').select('*');
 
   if (error) {
     console.error('Erro ao buscar produtos: ', error.message);
