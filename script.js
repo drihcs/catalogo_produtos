@@ -5,19 +5,6 @@ const supabase = createClient(
 
 let produtos = []
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const { data, error } = await supabase.from('produtos').select('*')
-
-  if (error) {
-    console.error('Erro ao carregar produtos:', error)
-    document.getElementById('produtos').textContent = 'Erro ao carregar produtos.'
-    return
-  }
-
-  produtos = data
-  renderizarProdutos()
-})
-
 function formataPreco(preco) {
   return preco.toLocaleString('pt-BR', {
     style: 'currency',
@@ -95,3 +82,15 @@ function aplicarDesconto() {
 }
 
 document.getElementById('aplicarDesconto').addEventListener('click', aplicarDesconto)
+document.addEventListener('DOMContentLoaded', async () => {
+  const { data, error } = await supabaseClient.from('produtos').select('*');
+
+  if (error) {
+    console.error('Erro ao carregar produtos:', error);
+    document.getElementById('produtos').textContent = 'Erro ao carregar produtos.';
+    return;
+  }
+
+  produtos = data;
+  renderizarProdutos();
+});
